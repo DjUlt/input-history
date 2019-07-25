@@ -330,15 +330,14 @@ namespace input_history2
                     }
                     else if (pad.three||pad.binds[1]||pad.binds[3])//1+2+3  !all
                     {
-                        if (pad.four|| pad.binds[4]|| pad.binds[2])//1+2+3+4  !all
+                        if ( pad.four|| pad.binds[4]|| pad.binds[2])//1+2+3+4  !all
                         {
                             if (buttton[0] != "1+2+3+4")
                             {
                                 buttton.Insert(0, "1+2+3+4");
                                 buttton.RemoveAt(buttton.Count - 1);
                             }
-                        }
-                        else//1+2+3
+                        }else//1+2+3
                         {
                             if (buttton[0] != "1+2+3")
                             {
@@ -347,7 +346,7 @@ namespace input_history2
                             }
                         }
                     }
-                    else if (pad.four||pad.binds[4]|| pad.binds[2])//1+2+4 !3 !1+3 !2+3 !3+4 !all
+                    else if (pad.four||pad.binds[4]|| pad.binds[2])//1+2+4 !1+3 !2+3 !3+4 !all
                     {
                         if (buttton[0] != "1+2+4")
                         {
@@ -714,34 +713,50 @@ namespace input_history2
                 }
             }
 
+            //todo datagridview
             if (pad.stateChanged)
             {
                 if (pad.DstateChanged)
                 {
-                    label1.Text = listtostring(direction);
+                    dataGridView1.Rows.Clear();
+                    //label1.Text = listtostring(direction);
                     buttton.Insert(0, buttton[0]);
                     buttton.RemoveAt(buttton.Count - 1);
-                    label2.Text = strlisttostr(buttton);
+                    //label2.Text = strlisttostr(buttton);
+
+                    dataGridView1.Rows.Add(direction[0], direction[1], direction[2], direction[3], direction[4], direction[5], direction[6], direction[7], direction[8], direction[9], direction[10], direction[11], direction[12], direction[13], direction[14], direction[15], direction[16], direction[17], direction[18], direction[19]);
+                    dataGridView1.Rows.Add(buttton[0], buttton[1], buttton[2], buttton[3], buttton[4], buttton[5], buttton[6], buttton[7], buttton[8], buttton[9], buttton[10], buttton[11], buttton[12], buttton[13], direction[14], buttton[15], buttton[16], buttton[17], buttton[18], buttton[19]);
                 }
                 else if (pad.BindsPressed(stick))
                 {
                     if (!equal(temp, buttton))
                     {
-                        label2.Text = strlisttostr(buttton);
+                        dataGridView1.Rows.Clear();
+                        //label2.Text = strlisttostr(buttton);
                         direction.Insert(0, direction[0]);
                         direction.RemoveAt(direction.Count - 1);
-                        label1.Text = listtostring(direction);
+                        //label1.Text = listtostring(direction);
+
+                        dataGridView1.Rows.Add(direction[0], direction[1], direction[2], direction[3], direction[4], direction[5], direction[6], direction[7], direction[8], direction[9], direction[10], direction[11], direction[12], direction[13], direction[14], direction[15], direction[16], direction[17], direction[18], direction[19]);
+                        dataGridView1.Rows.Add(buttton[0], buttton[1], buttton[2], buttton[3], buttton[4], buttton[5], buttton[6], buttton[7], buttton[8], buttton[9], buttton[10], buttton[11], buttton[12], buttton[13], direction[14], buttton[15], buttton[16], buttton[17], buttton[18], buttton[19]);
+
                     }
                 }
                 else if (pad.BstateChanged)
                 {
-                    label2.Text = strlisttostr(buttton);
+                    dataGridView1.Rows.Clear();
+                    //label2.Text = strlisttostr(buttton);
                     direction.Insert(0, direction[0]);
                     direction.RemoveAt(direction.Count - 1);
-                    label1.Text = listtostring(direction);
+                    //label1.Text = listtostring(direction);
+
+                    dataGridView1.Rows.Add(direction[0], direction[1], direction[2], direction[3], direction[4], direction[5], direction[6], direction[7], direction[8], direction[9], direction[10], direction[11], direction[12], direction[13], direction[14], direction[15], direction[16], direction[17], direction[18], direction[19]);
+                    dataGridView1.Rows.Add(buttton[0], buttton[1], buttton[2], buttton[3], buttton[4], buttton[5], buttton[6], buttton[7], buttton[8], buttton[9], buttton[10], buttton[11], buttton[12], buttton[13], direction[14], buttton[15], buttton[16], buttton[17], buttton[18], buttton[19]);
+
                 }
             }
 
+            GC.Collect();
             //if (pad.BindsPressed(stick)) label1.Text = string.Join(".", pad.buttons);
         }
 
@@ -765,14 +780,15 @@ namespace input_history2
             return test;
         }
 
-        private void Form1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode.ToString() == "F2")
-            {//hand over array of buttons for binds
-                Form2 form = new Form2(this);
-                form.ShowDialog();
-            }
-        }
+        //private void Form1_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    Console.WriteLine("test");
+        //    if (e.KeyCode == Keys.F2)
+        //    {//hand over array of buttons for binds
+        //        Form2 form = new Form2(this);
+        //        form.ShowDialog();
+        //    }
+        //}
 
         public Joystick[] GetSticks()
         {
@@ -801,13 +817,24 @@ namespace input_history2
                 {
                 }
             }
-            Console.WriteLine(sticks.Count);
+            //Console.WriteLine(sticks.Count);
             return sticks.ToArray();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             Joystick[] joystick = GetSticks();
+
+            this.KeyPreview = true;
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.F2)
+            {//hand over array of buttons for binds
+                Form2 form = new Form2(this);
+                form.ShowDialog();
+            }
         }
     }
 }

@@ -124,7 +124,7 @@ namespace input_history2
 
                 writer.Close();
                 writer.Dispose();
-
+                
                 this.Close();
             }
         }
