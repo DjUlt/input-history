@@ -69,6 +69,7 @@ namespace input_history2
                 else
                 {
                     StreamWriter stream = new StreamWriter(path, false);
+
                     for(int i = 0; i < 11; ++i)
                     {
                         stream.WriteLine(-1);
@@ -227,7 +228,7 @@ namespace input_history2
         private void timer1_Tick(object sender, EventArgs e)
         {
             timeout += 1;
-            if (timeout > 5000) this.Close();
+            if (timeout > 5000) { this.Close(); }
             //Console.WriteLine(timeout);
             //state = controller.GetState();
             //GamepadButtonFlags = state.Gamepad.Buttons;
