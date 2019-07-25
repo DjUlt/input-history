@@ -100,6 +100,7 @@ namespace input_history2
                 {
                     MessageBox.Show("There are 2 or more binds for 1 button, can not proceed");
                     swit = false;
+                    ids[i] = temp;
                     break;
                 }
                 ids[i] = temp;

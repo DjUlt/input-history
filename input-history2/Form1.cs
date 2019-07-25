@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using SlimDX.XInput;
 using SlimDX.DirectInput;
@@ -24,7 +23,8 @@ namespace input_history2
         List<char> direction = new List<char>();
         //string butttons = "";
         List<string> buttton = new List<string>();
-        
+
+        int timeout = 0;
 
         public class Pad
         {
@@ -226,6 +226,9 @@ namespace input_history2
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            timeout += 1;
+            if (timeout > 5000) this.Close();
+            //Console.WriteLine(timeout);
             //state = controller.GetState();
             //GamepadButtonFlags = state.Gamepad.Buttons;
 
