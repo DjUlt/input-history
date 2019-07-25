@@ -76,7 +76,7 @@ namespace input_history2
                     stream.Close();
                     stream.Dispose();
                 }
-            }
+            }//test
 
             public bool BindsPressed(Joystick stickk)
             {
