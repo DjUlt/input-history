@@ -1,6 +1,6 @@
 ﻿namespace input_history2
 {
-    partial class Form1
+    partial class Form3
     {
         /// <summary>
         /// Required designer variable.
@@ -37,22 +37,21 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(32, 23);
-            this.label1.Margin = new System.Windows.Forms.Padding(9, 0, 9, 0);
+            this.label1.Location = new System.Drawing.Point(17, 20);
+            this.label1.Margin = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 33);
+            this.label1.Size = new System.Drawing.Size(275, 31);
             this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.label1.Text = "Press the button to bind";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(32, 101);
-            this.label2.Margin = new System.Windows.Forms.Padding(9, 0, 9, 0);
+            this.label2.Location = new System.Drawing.Point(51, 51);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(84, 33);
+            this.label2.Size = new System.Drawing.Size(281, 31);
             this.label2.TabIndex = 1;
-            this.label2.Text = "label2";
+            this.label2.Text = "F3 to cancel, F4 to clear";
             // 
             // timer1
             // 
@@ -60,19 +59,21 @@
             this.timer1.Interval = 1;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // Form1
+            // Form3
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 33F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1124, 391);
+            this.ClientSize = new System.Drawing.Size(353, 105);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("Times New Roman", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Margin = new System.Windows.Forms.Padding(9, 7, 9, 7);
-            this.Name = "Form1";
-            this.Text = "Input-History";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
+            this.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
+            this.Name = "Form3";
+            this.Text = "Waiting for button press";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form3_FormClosed);
+            this.Load += new System.EventHandler(this.Form3_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form3_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -85,4 +86,3 @@
         private System.Windows.Forms.Timer timer1;
     }
 }
-
