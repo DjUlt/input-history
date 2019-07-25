@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using SlimDX.XInput;
 using SlimDX.DirectInput;
 using System.IO;
+using System.Reflection;
 
 namespace input_history2
 {
@@ -56,6 +57,29 @@ namespace input_history2
                 {
                     binds[i] = false;
                     ids[i] = -1;
+                }
+
+
+                string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Binds.txt");
+                if (File.Exists(path))
+                {
+                    StreamReader stream = new StreamReader(path);
+                    for (int i = 0; i < 7; ++i)
+                    {
+                        ids[i] = Convert.ToInt32(stream.ReadLine());
+                    }
+                    stream.Close();
+                    stream.Dispose();
+                }
+                else
+                {
+                    StreamWriter stream = new StreamWriter(path, false);
+                    for(int i = 0; i < 7; ++i)
+                    {
+                        stream.WriteLine(-1);
+                    }
+                    stream.Close();
+                    stream.Dispose();
                 }
             }
 

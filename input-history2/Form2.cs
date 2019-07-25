@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Reflection;
 //using SlimDX.XInput;
 //using SlimDX.DirectInput;
 
@@ -111,10 +112,18 @@ namespace input_history2
             }
             if (swit&&CheckForm())
             {
+                string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Binds.txt");
+                StreamWriter writer = File.CreateText(path);
+
                 for (int i = 0; i < 7; ++i)
                 {
                     parent.pad.ids[i] = ids[i];
+
+                    writer.WriteLine(ids[i]);
                 }
+
+                writer.Close();
+                writer.Dispose();
 
                 this.Close();
             }
