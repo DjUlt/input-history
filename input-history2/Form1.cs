@@ -799,16 +799,6 @@ namespace input_history2
         //    return test;
         //}
 
-        //private void Form1_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    Console.WriteLine("test");
-        //    if (e.KeyCode == Keys.F2)
-        //    {//hand over array of buttons for binds
-        //        Form2 form = new Form2(this);
-        //        form.ShowDialog();
-        //    }
-        //}
-
         public Joystick[] GetSticks()
         {
 
