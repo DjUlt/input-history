@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SlimDX.XInput;
 using SlimDX.DirectInput;
@@ -25,9 +20,9 @@ namespace input_history2
         Joystick stick;
         //Joystick[] Sticks;
 
-        string directions = "";
+        //string directions = "";
         List<char> direction = new List<char>();
-        string butttons = "";
+        //string butttons = "";
         List<string> buttton = new List<string>();
         
 
@@ -45,15 +40,15 @@ namespace input_history2
             public bool DstateChanged = false;//dpad state changed
             public bool BstateChanged = false;//buttons state changed
             public bool BindstateChanged = false;
-            public bool[] binds = new bool[7];//if bind #i from ids is pressed
+            public bool[] binds = new bool[11];//if bind #i from ids is pressed
             public bool[] buttons;//every button state
-            public int[] ids= new int[7];//size 7
+            public int[] ids= new int[11];//size 11
 
             private bool mem = false;
 
             public Pad()
             {
-                for(int i = 0; i < 7; ++i)
+                for(int i = 0; i < 11; ++i)
                 {
                     binds[i] = false;
                     ids[i] = -1;
@@ -64,7 +59,7 @@ namespace input_history2
                 if (File.Exists(path))
                 {
                     StreamReader stream = new StreamReader(path);
-                    for (int i = 0; i < 7; ++i)
+                    for (int i = 0; i < 11; ++i)
                     {
                         ids[i] = Convert.ToInt32(stream.ReadLine());
                     }
@@ -74,7 +69,7 @@ namespace input_history2
                 else
                 {
                     StreamWriter stream = new StreamWriter(path, false);
-                    for(int i = 0; i < 7; ++i)
+                    for(int i = 0; i < 11; ++i)
                     {
                         stream.WriteLine(-1);
                     }
@@ -96,14 +91,14 @@ namespace input_history2
                 return false;
             }
 
-            public int searchid(int[] arr, int id)
-            {
-                for (int i = 0; i < arr.Length; ++i)
-                {
-                    if (arr[i] == id) return i;
-                }
-                return -1;
-            }
+            //public int searchid(int[] arr, int id)
+            //{
+            //    for (int i = 0; i < arr.Length; ++i)
+            //    {
+            //        if (arr[i] == id) return i;
+            //    }
+            //    return -1;
+            //}
 
             public void Checkstate(Controller controller, Joystick stickk)
             {
@@ -138,29 +133,50 @@ namespace input_history2
                 else Dright = false;
                 if (mem != Dright) { stateChanged = true; DstateChanged = true; }
 
-                mem = three;
-                if (gamepadButtonFlags.HasFlag(GamepadButtonFlags.A)) three = true;
-                else three = false;
-                if (mem != three) { stateChanged = true; BstateChanged = true; }
-
-                mem = four;
-                if (gamepadButtonFlags.HasFlag(GamepadButtonFlags.B)) four = true;
-                else four = false;
-                if (mem != four) { stateChanged = true; BstateChanged = true; }
-
-                mem = one;
-                if (gamepadButtonFlags.HasFlag(GamepadButtonFlags.X)) one = true;
-                else one = false;
-                if (mem != one) { stateChanged = true; BstateChanged = true; }
-
-                mem = two;
-                if (gamepadButtonFlags.HasFlag(GamepadButtonFlags.Y)) two = true;
-                else two = false;
-                if (mem != two) { stateChanged = true; BstateChanged = true; }
-
-                for (int i = 0; i < buttons.Length; ++i)
+                if (ids[9] != -1)
                 {
-                    if (ids.Contains(i)) { mem = binds[searchid(ids, i)]; if (buttons[i] == true) { binds[searchid(ids, i)] = true; } else { binds[searchid(ids, i)] = false; } if (mem != binds[searchid(ids, i)]) { stateChanged = true; BindstateChanged = true; } }
+                    mem = three;//9
+                //if (gamepadButtonFlags.HasFlag(GamepadButtonFlags.A)) three = true;
+                    if (buttons[ids[9]]) three = true;
+                    else three = false;
+                    if (mem != three) { stateChanged = true; BstateChanged = true; }
+                }
+
+                if (ids[10] != -1)
+                {
+                    mem = four;//10
+                               //if (gamepadButtonFlags.HasFlag(GamepadButtonFlags.B)) four = true;
+                    if (buttons[ids[10]]) four = true;
+                    else four = false;
+                    if (mem != four) { stateChanged = true; BstateChanged = true; }
+                }
+
+                if (ids[7] != -1)
+                {
+                    mem = one;//7
+                              //if (gamepadButtonFlags.HasFlag(GamepadButtonFlags.X)) one = true;
+                    if (buttons[ids[7]]) one = true;
+                    else one = false;
+                    if (mem != one) { stateChanged = true; BstateChanged = true; }
+                }
+
+                if (ids[8] != -1)
+                {
+                    mem = two;//8
+                              //if (gamepadButtonFlags.HasFlag(GamepadButtonFlags.Y)) two = true;
+                    if (buttons[ids[8]]) two = true;
+                    else two = false;
+                    if (mem != two) { stateChanged = true; BstateChanged = true; }
+                }
+
+                for (int i = 0; i < 7; ++i)
+                {
+                    if (ids[i] == -1) continue;
+                    mem = binds[i];
+                    if (buttons[ids[i]] == true) { binds[i] = true; }
+                    else { binds[i] = false; }
+                    if (mem != binds[i]) { stateChanged = true; BindstateChanged = true; } 
+
                 }
             }
         }
@@ -725,7 +741,7 @@ namespace input_history2
                     //label2.Text = strlisttostr(buttton);
 
                     dataGridView1.Rows.Add(direction[0], direction[1], direction[2], direction[3], direction[4], direction[5], direction[6], direction[7], direction[8], direction[9], direction[10], direction[11], direction[12], direction[13], direction[14], direction[15], direction[16], direction[17], direction[18], direction[19]);
-                    dataGridView1.Rows.Add(buttton[0], buttton[1], buttton[2], buttton[3], buttton[4], buttton[5], buttton[6], buttton[7], buttton[8], buttton[9], buttton[10], buttton[11], buttton[12], buttton[13], direction[14], buttton[15], buttton[16], buttton[17], buttton[18], buttton[19]);
+                    dataGridView1.Rows.Add(buttton[0], buttton[1], buttton[2], buttton[3], buttton[4], buttton[5], buttton[6], buttton[7], buttton[8], buttton[9], buttton[10], buttton[11], buttton[12], buttton[13], buttton[14], buttton[15], buttton[16], buttton[17], buttton[18], buttton[19]);
                 }
                 else if (pad.BindsPressed(stick))
                 {
@@ -738,7 +754,7 @@ namespace input_history2
                         //label1.Text = listtostring(direction);
 
                         dataGridView1.Rows.Add(direction[0], direction[1], direction[2], direction[3], direction[4], direction[5], direction[6], direction[7], direction[8], direction[9], direction[10], direction[11], direction[12], direction[13], direction[14], direction[15], direction[16], direction[17], direction[18], direction[19]);
-                        dataGridView1.Rows.Add(buttton[0], buttton[1], buttton[2], buttton[3], buttton[4], buttton[5], buttton[6], buttton[7], buttton[8], buttton[9], buttton[10], buttton[11], buttton[12], buttton[13], direction[14], buttton[15], buttton[16], buttton[17], buttton[18], buttton[19]);
+                        dataGridView1.Rows.Add(buttton[0], buttton[1], buttton[2], buttton[3], buttton[4], buttton[5], buttton[6], buttton[7], buttton[8], buttton[9], buttton[10], buttton[11], buttton[12], buttton[13], buttton[14], buttton[15], buttton[16], buttton[17], buttton[18], buttton[19]);
 
                     }
                 }
@@ -751,7 +767,7 @@ namespace input_history2
                     //label1.Text = listtostring(direction);
 
                     dataGridView1.Rows.Add(direction[0], direction[1], direction[2], direction[3], direction[4], direction[5], direction[6], direction[7], direction[8], direction[9], direction[10], direction[11], direction[12], direction[13], direction[14], direction[15], direction[16], direction[17], direction[18], direction[19]);
-                    dataGridView1.Rows.Add(buttton[0], buttton[1], buttton[2], buttton[3], buttton[4], buttton[5], buttton[6], buttton[7], buttton[8], buttton[9], buttton[10], buttton[11], buttton[12], buttton[13], direction[14], buttton[15], buttton[16], buttton[17], buttton[18], buttton[19]);
+                    dataGridView1.Rows.Add(buttton[0], buttton[1], buttton[2], buttton[3], buttton[4], buttton[5], buttton[6], buttton[7], buttton[8], buttton[9], buttton[10], buttton[11], buttton[12], buttton[13], buttton[14], buttton[15], buttton[16], buttton[17], buttton[18], buttton[19]);
 
                 }
             }
@@ -760,25 +776,25 @@ namespace input_history2
             //if (pad.BindsPressed(stick)) label1.Text = string.Join(".", pad.buttons);
         }
 
-        public string listtostring(List<char> list)
-        {
-            string test = "";
-            for (int i = 0; i < list.Count; ++i)
-            {
-                test += "   "+list[i];
-            }
-            return test;
-        }
+        //public string listtostring(List<char> list)
+        //{
+        //    string test = "";
+        //    for (int i = 0; i < list.Count; ++i)
+        //    {
+        //        test += "   "+list[i];
+        //    }
+        //    return test;
+        //}
 
-        public string strlisttostr(List<string> list)
-        {
-            string test = "";
-            for (int i = 0; i < list.Count; ++i)
-            {
-                test += " " + list[i];
-            }
-            return test;
-        }
+        //public string strlisttostr(List<string> list)
+        //{
+        //    string test = "";
+        //    for (int i = 0; i < list.Count; ++i)
+        //    {
+        //        test += " " + list[i];
+        //    }
+        //    return test;
+        //}
 
         //private void Form1_KeyDown(object sender, KeyEventArgs e)
         //{
@@ -826,6 +842,7 @@ namespace input_history2
             Joystick[] joystick = GetSticks();
 
             this.KeyPreview = true;
+            
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -834,7 +851,27 @@ namespace input_history2
             {//hand over array of buttons for binds
                 Form2 form = new Form2(this);
                 form.ShowDialog();
+            }else if(e.KeyCode == Keys.F4)
+            {
+                for (int i = 0; i < 20; ++i)
+                {
+                    dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+                }
+            }else if (e.KeyCode == Keys.F5)
+            {
+                for (int i = 0; i < 20; ++i)
+                {
+                    dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                }
+            }else if (e.KeyCode == Keys.F6)
+            {
+                for (int i = 0; i < 20; ++i)
+                {
+                    dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                }
             }
+
+
         }
     }
 }

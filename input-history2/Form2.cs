@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
@@ -17,15 +11,15 @@ namespace input_history2
     public partial class Form2 : Form
     {
         Form1 parent;
-        public int[] ids = new int[7];
+        public int[] ids = new int[11];
 
         public Form2(Form1 form)
         {
             InitializeComponent();
             parent = form;
-            for(int i = 0; i < 7; ++i)
+            for(int i = 0; i < 11; ++i)
             {
-                ids[i] = -1;
+                ids[i] = parent.pad.ids[i];
             }
         }
 
@@ -98,7 +92,7 @@ namespace input_history2
             int temp = -1;
             bool swit = true;
 
-            for (int i = 0; i < 7; ++i)
+            for (int i = 0; i < 11; ++i)
             {
                 temp = ids[i];
                 ids[i] = -1;
@@ -115,7 +109,7 @@ namespace input_history2
                 string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"Binds.txt");
                 StreamWriter writer = File.CreateText(path);
 
-                for (int i = 0; i < 7; ++i)
+                for (int i = 0; i < 11; ++i)
                 {
                     parent.pad.ids[i] = ids[i];
 
@@ -150,10 +144,18 @@ namespace input_history2
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            for (int i = 0; i < 7; ++i)
+            for (int i = 0; i < 11; ++i)
             {
                 ids[i] = parent.pad.ids[i];
             }
+            if (ids[10] == -1) button12.Text = "";
+            else button12.Text = Convert.ToString(ids[10]);
+            if (ids[9] == -1) button11.Text = "";
+            else button11.Text = Convert.ToString(ids[9]);
+            if (ids[8] == -1) button10.Text = "";
+            else button10.Text = Convert.ToString(ids[8]);
+            if (ids[7] == -1) button9.Text = "";
+            else button9.Text = Convert.ToString(ids[7]);
             if (ids[6] == -1) button7.Text = "";
             else button7.Text = Convert.ToString(ids[6]);
             if (ids[5] == -1) button6.Text = "";
@@ -168,6 +170,42 @@ namespace input_history2
             else button2.Text = Convert.ToString(ids[1]);
             if (ids[0] == -1) button1.Text = "";
             else button1.Text = Convert.ToString(ids[0]);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            button9.Text = "Waiting";
+            Form3 form = new Form3("1", this);
+            form.ShowDialog();
+            if (ids[7] == -1) button9.Text = "";
+            else button9.Text = Convert.ToString(ids[7]);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            button10.Text = "Waiting";
+            Form3 form = new Form3("2", this);
+            form.ShowDialog();
+            if (ids[8] == -1) button10.Text = "";
+            else button10.Text = Convert.ToString(ids[8]);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            button11.Text = "Waiting";
+            Form3 form = new Form3("3", this);
+            form.ShowDialog();
+            if (ids[9] == -1) button11.Text = "";
+            else button11.Text = Convert.ToString(ids[9]);
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            button12.Text = "Waiting";
+            Form3 form = new Form3("4", this);
+            form.ShowDialog();
+            if (ids[10] == -1) button12.Text = "";
+            else button12.Text = Convert.ToString(ids[10]);
         }
     }
 }

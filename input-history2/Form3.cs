@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using SlimDX.DirectInput;
 
@@ -97,6 +91,18 @@ namespace input_history2
                         case "1+2+3+4":
                             parentForm.ids[6] = i;
                             break;
+                        case "1":
+                            parentForm.ids[7] = i;
+                            break;
+                        case "2":
+                            parentForm.ids[8] = i;
+                            break;
+                        case "3":
+                            parentForm.ids[9] = i;
+                            break;
+                        case "4":
+                            parentForm.ids[10] = i;
+                            break;
                     }
                     this.Close();
                 }
@@ -139,6 +145,18 @@ namespace input_history2
                         break;
                     case "1+2+3+4":
                         parentForm.ids[6] = -1;
+                        break;
+                    case "1":
+                        parentForm.ids[7] = -1;
+                        break;
+                    case "2":
+                        parentForm.ids[8] = -1;
+                        break;
+                    case "3":
+                        parentForm.ids[9] = -1;
+                        break;
+                    case "4":
+                        parentForm.ids[10] = -1;
                         break;
                 }
                 this.Close();
