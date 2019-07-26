@@ -43,6 +43,7 @@ namespace input_history2
             public bool[] binds = new bool[11];//if bind #i from ids is pressed
             public bool[] buttons;//every button state
             public int[] ids= new int[11];//size 11
+            public int zValue = 0;
 
             private bool mem = false;
 
@@ -113,6 +114,8 @@ namespace input_history2
                 JoystickState state1 = new JoystickState();
                 state1 = stickk.GetCurrentState();
                 buttons = state1.GetButtons();
+                zValue = state1.Z;
+                //Console.WriteLine(zValue);
 
                 mem = Dup;
                 if (gamepadButtonFlags.HasFlag(GamepadButtonFlags.DPadUp)) Dup = true;
@@ -173,10 +176,27 @@ namespace input_history2
                 for (int i = 0; i < 7; ++i)
                 {
                     if (ids[i] == -1) continue;
+
                     mem = binds[i];
-                    if (buttons[ids[i]] == true) { binds[i] = true; }
-                    else { binds[i] = false; }
-                    if (mem != binds[i]) { stateChanged = true; BindstateChanged = true; } 
+
+                    if (ids[i] == 50)
+                    {
+                        if (zValue >= 50) { binds[i] = true; }
+                        else { binds[i] = false; }
+                    }
+                    else if (ids[i] == -50)
+                    {
+                        if (zValue <= -50) { binds[i] = true; }
+                        else { binds[i] = false; }
+                    }
+                    else
+                    {
+                        if (buttons[ids[i]] == true) { binds[i] = true; }
+                        else { binds[i] = false; }
+                    }
+                    //Console.WriteLine(binds[i] + " " + i);
+
+                    if (mem != binds[i]) {  stateChanged = true; BstateChanged = true; } 
 
                 }
             }
@@ -577,6 +597,13 @@ namespace input_history2
                             buttton.Insert(0, "3+4");
                             buttton.RemoveAt(buttton.Count - 1);
                         }
+                    }
+                }else
+                {
+                    if (buttton[0] != "☆")
+                    {
+                        buttton.Insert(0, "☆");
+                        buttton.RemoveAt(buttton.Count - 1);
                     }
                 }
             }

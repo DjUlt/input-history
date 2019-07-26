@@ -64,50 +64,59 @@ namespace input_history2
             JoystickState state1 = new JoystickState();
             state1 = stick.GetCurrentState();
             buttons = state1.GetButtons();
-            for(int i = 0; i < buttons.Length; ++i)
+            int zValue = state1.Z;
+
+            for (int i = 0; i < buttons.Length; ++i)
             {
-                if (buttons[i])
+                if (buttons[i]|| zValue >= 50|| zValue <= -50)
                 {
+                    int temp = i;
+                    if (zValue >= 50) temp = 50;
+                    if (zValue <= -50) temp = -50;
                     switch (bind)
                     {
                         case "1+2":
-                            parentForm.ids[0] = i;
+                            parentForm.ids[0] = temp;
                             break;
                         case "1+3":
-                            parentForm.ids[1] = i;
+                            parentForm.ids[1] = temp;
                             break;
                         case "1+4":
-                            parentForm.ids[2] = i;
+                            parentForm.ids[2] = temp;
                             break;
                         case "2+3":
-                            parentForm.ids[3] = i;
+                            parentForm.ids[3] = temp;
                             break;
                         case "2+4":
-                            parentForm.ids[4] = i;
+                            parentForm.ids[4] = temp;
                             break;
                         case "3+4":
-                            parentForm.ids[5] = i;
+                            parentForm.ids[5] = temp;
                             break;
                         case "1+2+3+4":
-                            parentForm.ids[6] = i;
+                            parentForm.ids[6] = temp;
                             break;
                         case "1":
-                            parentForm.ids[7] = i;
+                            parentForm.ids[7] = temp;
                             break;
                         case "2":
-                            parentForm.ids[8] = i;
+                            parentForm.ids[8] = temp;
                             break;
                         case "3":
-                            parentForm.ids[9] = i;
+                            parentForm.ids[9] = temp;
                             break;
                         case "4":
-                            parentForm.ids[10] = i;
+                            parentForm.ids[10] = temp;
                             break;
                     }
+                    //Console.WriteLine("test");
                     this.Close();
+                    //Console.WriteLine("test");
                 }
             }
-            
+            //int zValue = state1.Z;
+            //if (zValue >= 50) { }
+            //if (zValue <= -50) { }
         }
 
         private void Form3_FormClosed(object sender, FormClosedEventArgs e)
